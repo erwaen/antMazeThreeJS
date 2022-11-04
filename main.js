@@ -18,7 +18,7 @@ camera.position.setZ(80);
 const controls = new OrbitControls(camera, renderer.domElement);
 
 const ambientLight = new THREE.AmbientLight(0xffffff);
-const gridHelper = new THREE.GridHelper(200, 50);
+const gridHelper = new THREE.GridHelper(200, 200);
 
 scene.add(gridHelper, ambientLight);
 
@@ -32,6 +32,15 @@ function createTorus(){
 
 const torus = createTorus();
 scene.add(torus);
+
+// ############################ FLOOR ############################
+const mesaTexture = new THREE.TextureLoader().load('mesa.jpg');
+let geometry = new THREE.PlaneGeometry( 200, 200 );
+let material = new THREE.MeshStandardMaterial( { map: mesaTexture} );
+const plane = new THREE.Mesh( geometry, material );
+plane.rotateX(-Math.PI / 2);
+scene.add( plane );
+
 
 // Create the ant system or like a invisible box that contain de ANT
 const antSystem = new THREE.Object3D();
@@ -47,8 +56,8 @@ antSystem.add(midBodyMesh);
 
 
 // sphere of the body 
-let geometry = new THREE.SphereGeometry(1, 32, 32);
-let material = new THREE.MeshStandardMaterial({color: 0xfffffff, map: texture});
+geometry = new THREE.SphereGeometry(1, 32, 32); 
+material = new THREE.MeshStandardMaterial({color: 0xfffffff, map: texture});
 const antBodyMid = new THREE.Mesh(geometry, material);
 midBodyMesh.add(antBodyMid);
 
