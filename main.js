@@ -45,6 +45,8 @@ scene.add( plane );
 // Create the ant system or like a invisible box that contain de ANT
 const antSystem = new THREE.Object3D();
 antSystem.position.y = 1.5;
+antSystem.position.x = 0;
+antSystem.position.z = 7;
 scene.add(antSystem);
 
 const texture = new THREE.TextureLoader().load('dark-concrete-texture-background.jpg');
@@ -61,7 +63,45 @@ material = new THREE.MeshStandardMaterial({color: 0xfffffff, map: texture});
 const antBodyMid = new THREE.Mesh(geometry, material);
 midBodyMesh.add(antBodyMid);
 
-// TODO: Create the legs of the ant
+// ################### LEGS ###################
+const legsMesh = new THREE.Object3D(); // only the mesh
+midBodyMesh.add(legsMesh);
+
+const points = [];
+points.push( new THREE.Vector3( 0, 1, 0 ) );
+points.push( new THREE.Vector3( 0, 2, 0 ) );
+points.push( new THREE.Vector3( 0, -2, 3 ) );
+
+geometry = new THREE.BufferGeometry().setFromPoints( points );
+const line = new THREE.Line( geometry, material );
+//scene.add( line );
+legsMesh.add(line);
+
+const legsMesh2 = new THREE.Object3D(); // only the mesh
+midBodyMesh.add(legsMesh2);
+
+const points2 = [];
+points2.push( new THREE.Vector3( 0.2, 1, 0 ) );
+points2.push( new THREE.Vector3( 0.2, 2, 0 ) );
+points2.push( new THREE.Vector3( 0.2, -2, 3 ) );
+
+geometry = new THREE.BufferGeometry().setFromPoints( points2 );
+const line2 = new THREE.Line( geometry, material );
+//scene.add( line );
+legsMesh2.add(line2);
+
+const legsMesh3 = new THREE.Object3D(); // only the mesh
+midBodyMesh.add(legsMesh3);
+
+const points3 = [];
+points3.push( new THREE.Vector3( -0.2, 1, 0 ) );
+points3.push( new THREE.Vector3( -0.2, 2, 0 ) );
+points3.push( new THREE.Vector3( -0.2, -2, 3 ) );
+
+geometry = new THREE.BufferGeometry().setFromPoints( points3 );
+const line3 = new THREE.Line( geometry, material );
+//scene.add( line );
+legsMesh3.add(line3);
 
 
 // ################### HEAD OF THE BODY (SPHERE y Antenas)###################
@@ -84,7 +124,6 @@ material = new THREE.MeshStandardMaterial({color: 0xfffffff, map: texture});
 const antBack = new THREE.Mesh(geometry, material);
 antBack.position.x = -1.6;
 antBack.position.y = 0.4;
-//antBack.position.y = 0.2
 antSystem.add(antBack);
 
 
