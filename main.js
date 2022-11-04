@@ -89,6 +89,18 @@ antSystem.add(antBack);
 
 
 
+// ################### CREATE SUGARS ON THE SCENE ###################
+function createRandomSugar(){
+  const geometry = new THREE.ConeGeometry( 1, 0.5, 9 );
+  const material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
+  const sugar = new THREE.Mesh(geometry, material);
+
+  const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(150));
+  sugar.position.set(x,0.2,z);
+  scene.add(sugar);
+}
+const numOfSugar = 20;
+Array(numOfSugar).fill().forEach(createRandomSugar);
 
 function animate(){
   requestAnimationFrame(animate);
