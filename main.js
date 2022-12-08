@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import {MapControls, OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 
 import Ant from './models/ant.js';
+import Sugar from './models/sugar.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -139,13 +140,8 @@ scene.add(ant.antSystem);
 
 // ################### CREATE SUGARS ON THE SCENE ###################
 function createRandomSugar(){
-  const geometry = new THREE.ConeGeometry( 1, 0.5, 9 );
-  const material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
-  const sugar = new THREE.Mesh(geometry, material);
-
-  const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(150));
-  sugar.position.set(x,0.2,z);
-  scene.add(sugar);
+  const sugar = new Sugar();
+  scene.add(sugar.mesh);
 }
 const numOfSugar = 20;
 Array(numOfSugar).fill().forEach(createRandomSugar);

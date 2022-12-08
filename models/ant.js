@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 
-
 // ant model
 class Ant {
     constructor() {
