@@ -21,7 +21,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 const ambientLight = new THREE.AmbientLight(0xffffff);
 const gridHelper = new THREE.GridHelper(200, 200);
 
-scene.add(gridHelper, ambientLight);
+// scene.add(gridHelper, ambientLight);
 
 
 function createTorus(){
