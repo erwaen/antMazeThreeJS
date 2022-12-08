@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline';
+
 // ant model
 class Ant {
     constructor() {
@@ -21,6 +21,8 @@ class Ant {
         
         this.createFlashLight();
         this.createAntLight();
+
+        this.createFlashLightDecorator();
               
     }
     
@@ -193,6 +195,31 @@ class Ant {
         this.antLightRight.distance = 6;
         this.antLightRight.intensity = 2;
         this.antSystem.add(this.antLightRight);
+    }
+
+    createFlashLightDecorator(){
+
+        //circulo amarillo
+        this.FlashLightBox = new THREE.Object3D(); // only the mesh
+        this.FlashLightBox.position.set(0.9, 0.5, 0);
+        const geometry = new THREE.SphereGeometry(0.1, 32, 32);
+        const material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+        this.FlashLightMesh = new THREE.Mesh(geometry, material);
+
+        //dona negra alrededor
+        this.DonutBox = new THREE.Object3D();
+        this.DonutBox.position.set(0.88, 0.5, 0);
+        const geometryDonut = new THREE.TorusGeometry(0.1,0.05,3,200);
+        geometryDonut.rotateY(Math.PI/2);
+        geometryDonut.rotateZ(Math.PI/6);
+        const materialDonut = new THREE.MeshBasicMaterial( { color: 0x808080 } );
+        this.DonutMesh = new THREE.Mesh(geometryDonut, materialDonut);
+        
+        //agregamos al box del circulo el mesh
+        this.DonutBox.add(this.DonutMesh);
+        this.FlashLightBox.add(this.FlashLightMesh);
+        this.headBox.add(this.DonutBox);
+        this.headBox.add(this.FlashLightBox);
     }
 }
 
