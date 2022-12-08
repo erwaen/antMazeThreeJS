@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 
-import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline';
 // ant model
 class Ant {
     constructor() {
