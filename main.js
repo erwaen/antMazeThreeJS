@@ -14,7 +14,8 @@ antMaze.scene.add(ant.antSystem);
 function animate(){
   requestAnimationFrame(animate);
   antMaze.controls.update();
-  antMaze.renderer.render(antMaze.scene, antMaze.camera);
+  antMaze.renderer.render(antMaze.scene, ant.camera);
+  // ant.antSystem.position.x += 0.03;
 }
 
 animate();
