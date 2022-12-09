@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import ThirdPersonCamera from './thirdPersonCamera';
 
 // ant model
 class Ant {
@@ -22,10 +23,27 @@ class Ant {
         this.createAntLight();
 
         this.createFlashLightDecorator();
+
+        this._initCamera();
+
+        
               
     }
-    
-    
+
+    get camera() {
+        return this._camera.camera;
+    }
+    _initCamera() {
+        this._camera =  new ThirdPersonCamera();
+        this.antSystem.add(this._camera.camera);
+        this._camera.camera.position.y = 10;
+        this._camera.camera.position.x = 15;
+        
+
+        // this.camera.camera.rot
+        this._camera.camera.rotateY(Math.PI/ 2);
+        this._camera.camera.rotateX(-Math.PI / 4);
+    }
     
     createMidPart() {
         this.midPartBox = new THREE.Object3D(); // only the mesh
@@ -221,5 +239,7 @@ class Ant {
         this.headBox.add(this.FlashLightBox);
     }
 }
+
+
 
 export default Ant;
