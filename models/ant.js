@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import ThirdPersonCamera from './thirdPersonCamera';
+import {MapControls, OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 
 // ant model
 class Ant {
@@ -14,7 +15,7 @@ class Ant {
 
         this.clockAntena1 = new THREE.Clock();
         this.clockAntena2 = new THREE.Clock();
-        this.antenaSpeed = 2;
+        this.antenaSpeed = 5;
 
         this.clockLegs1 = new THREE.Clock();
         this.clockLegs2 = new THREE.Clock();
@@ -71,13 +72,22 @@ class Ant {
     _initCamera() {
         this._camera =  new ThirdPersonCamera();
         this.antSystem.add(this._camera.camera);
+        this.renderer = new THREE.WebGLRenderer({ // BORRAR
+            canvas: document.querySelector('#bg'), // BORRAR
+        }); // BORRAR
+        this.renderer.setPixelRatio(window.devicePixelRatio); // BORRAR
+        this.renderer.setSize(window.innerWidth, window.innerHeight); // BORRAR
         this._camera.camera.position.y = 10;
         this._camera.camera.position.z = -15;
+        
+        // this._cameraControl.target = this.antSystem.position;
         
 
         // this.camera.camera.rot
         this._camera.camera.rotateY(Math.PI);
         this._camera.camera.rotateX(-Math.PI / 4);
+
+        this._cameraControl = new OrbitControls(this.camera, this.renderer.domElement); // BORRAR
 
 
 
@@ -266,8 +276,8 @@ class Ant {
         this.DonutBox = new THREE.Object3D();
         this.DonutBox.position.set(0, 0.5, -0.88);
         const geometryDonut = new THREE.TorusGeometry(0.1,0.05,3,200);
-        geometryDonut.rotateY(Math.PI/2);
-        geometryDonut.rotateZ(Math.PI/6);
+        // geometryDonut.rotateY(Math.PI/2);
+        geometryDonut.rotateX(Math.PI/6);
         const materialDonut = new THREE.MeshBasicMaterial( { color: 0x808080 } );
         this.DonutMesh = new THREE.Mesh(geometryDonut, materialDonut);
         
@@ -293,7 +303,7 @@ class Ant {
         //this.legLeft1.rotation.z = Math.sin(this.clockLegs1.getElapsedTime()*this.legSpeedZ) * 0.01;
         //this.legRight1.rotation.x = Math.sin(this.clockLegs1.getElapsedTime()*this.legSpeed) * 0.3;
         this.legRight1.rotation.x = Math.sin(this.clockLegs4.getElapsedTime()*this.legSpeed) * 0.3;
-        if(this.clockLegs1.getElapsedTime() > 1){ 
+        if(this.clockLegs1.getElapsedTime() > 1 ){ 
             this.legLeft2.rotation.x = Math.sin(this.clockLegs2.getElapsedTime()*this.legSpeed) * 0.3;
             //this.legLeft2.rotation.z = Math.sin(this.clockLegs2.getElvapsedTime()*this.legSpeedZ) * 0.2;
             this.legRight2.rotation.x = Math.sin(this.clockLegs2.getElapsedTime()*this.legSpeed) * 0.3;
@@ -310,7 +320,7 @@ class Ant {
 
     animateAntena(){
         this.antena1.rotation.x = Math.sin(this.clockAntena1.getElapsedTime()*this.antenaSpeed) * 0.1;
-        if(this.clockAntena1.getElapsedTime() > 5){
+        if(this.clockAntena1.getElapsedTime() > 2){
             this.antena2.rotation.x = Math.sin(this.clockAntena2.getElapsedTime()*this.antenaSpeed) * 0.1;
         }
         
