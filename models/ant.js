@@ -38,7 +38,7 @@ class Ant {
 
 
 
-        this.texture = new THREE.TextureLoader().load('../assets/cuerpotextura.jpg');
+        this.texture = new THREE.TextureLoader().load('../assets/skingris.avif');
         this.material = new THREE.MeshStandardMaterial({ color: 0xfffffff, map: this.texture });
 
         this.createMidPart();
@@ -55,11 +55,6 @@ class Ant {
 
         this._initCamera();
         
-
-        
-        setTimeout(() => {
-            console.log('hola');
-        }, 3000);
 
               
     }
@@ -80,13 +75,14 @@ class Ant {
         this._camera.camera.position.y = 10;
         this._camera.camera.position.z = -15;
         
+        
         // this._cameraControl.target = this.antSystem.position;
         
 
         // this.camera.camera.rot
-        this._camera.camera.rotateY(Math.PI);
-        this._camera.camera.rotateX(-Math.PI / 4);
-
+        // this._camera.camera.rotateY(Math.PI);
+        // this._camera.camera.rotateX(-Math.PI / 4);
+        this._camera.camera.lookAt(this.FlashLightBox.position);
         this._cameraControl = new OrbitControls(this.camera, this.renderer.domElement); // BORRAR
 
 
@@ -157,6 +153,7 @@ class Ant {
         legBasePosition1[2] -= 0.25;
         legBasePosition2[2] -= 0.25;
         legBasePosition3[2] -= 0.25;
+        legBasePosition3[0] += 0.25;
         this.legRight2 = this.createLeg(legBasePosition1, legBasePosition2 , legBasePosition3 );
         this.rightLegsBox.add(this.legRight2);
 
@@ -164,12 +161,13 @@ class Ant {
         legBasePosition1[2] -= 0.25;
         legBasePosition2[2] -= 0.25;
         legBasePosition3[2] -= 0.25;
+        legBasePosition3[0] += 0.25;
         this.legRight3 = this.createLeg(legBasePosition1, legBasePosition2, legBasePosition3);
         this.rightLegsBox.add(this.legRight3);
 
         this.midPartBox.add(this.rightLegsBox);
 
-        // LEFT LEGS
+       
         const leftBase1 = [0, 1, 0.3];
         const leftBase2 = [-0.5, 2.5, 0.3]; 
         const leftBase3 = [-1, -2, 0.3];
@@ -185,6 +183,7 @@ class Ant {
         leftBase1[2] -= 0.25;
         leftBase2[2] -= 0.25;
         leftBase3[2] -= 0.25;
+        leftBase3[0] -= 0.25;
         this.legLeft2 = this.createLeg(leftBase1, leftBase2 , leftBase3 );
         this.leftLegsBox.add(this.legLeft2);
 
@@ -192,6 +191,7 @@ class Ant {
         leftBase1[2] -= 0.25;
         leftBase2[2] -= 0.25;
         leftBase3[2] -= 0.25;
+        leftBase3[0] -= 0.25;
         this.legLeft3 = this.createLeg(leftBase1, leftBase2, leftBase3);
         this.leftLegsBox.add(this.legLeft3);
 
@@ -261,6 +261,7 @@ class Ant {
         this.antLightRight.distance = 6;
         this.antLightRight.intensity = 2;
         this.antSystem.add(this.antLightRight);
+
     }
 
     createFlashLightDecorator(){

@@ -63,7 +63,7 @@ class AntMaze{
         return torus;
     }
     createFloor(){
-        this.mesaTexture = new THREE.TextureLoader().load('mesa.jpg');
+        this.mesaTexture = new THREE.TextureLoader().load('./assets/table2.jpeg');
         let geometry = new THREE.PlaneGeometry( 200, 200 );
         let material = new THREE.MeshStandardMaterial( { map: this.mesaTexture} );
         const plane = new THREE.Mesh( geometry, material );
