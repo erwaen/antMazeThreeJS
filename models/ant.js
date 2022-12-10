@@ -284,16 +284,42 @@ class Ant {
     animateLegs(){
         // rotate with speed
         this.legLeft1.rotation.x = Math.sin(this.clockLegs1.getElapsedTime()*this.legSpeed) * 0.3;
+        //this.legRight1.rotation.x = Math.sin(this.clockLegs1.getElapsedTime()*this.legSpeed) * 0.3;
+        //this.legRight1.rotation.x = Math.sin(this.clockLegs4.getElapsedTime()*this.legSpeed) * 0.3;
+        if(this.clockLegs1.getElapsedTime() > 2){
+            this.legLeft2.rotation.x = Math.sin(this.clockLegs2.getElapsedTime()*this.legSpeed) * 0.3;
+            //this.legRight2.rotation.x = Math.sin(this.clockLegs2.getElapsedTime()*this.legSpeed) * 0.3;
+        }
+ 
+        if(this.clockLegs2.getElapsedTime() > 2){
+            this.legLeft3.rotation.x = Math.sin(this.clockLegs3.getElapsedTime()*this.legSpeed) * 0.3;
+            //this.legRight3.rotation.x = Math.sin(this.clockLegs3.getElapsedTime()*this.legSpeed) * 0.3;
+        }
         
-        this.legLeft2.rotation.x = Math.sin(this.clockLegs2.getElapsedTime()*this.legSpeed) * 0.3;
-        this.legLeft3.rotation.x = Math.sin(this.clockLegs3.getElapsedTime()*this.legSpeed) * 0.3;
+       
+        
+        // if(this.clockLegs4.getElapsedTime() > 2){
+        //     this.legRight2.rotation.x = Math.sin(this.clockLegs5.getElapsedTime()*this.legSpeed) * 0.3;
+        // } 
+ 
+        // if(this.clockLegs5.getElapsedTime() > 2){
+        //     this.legRight3.rotation.x = Math.sin(this.clockLegs6.getElapsedTime()*this.legSpeed) * 0.3;
+        // }
 
         // wait for 1 second and then rotate other legs
-        if(this.clockLegs1.getElapsedTime() > 1){
-            this.legRight1.rotation.x = Math.sin(this.clockLegs4.getElapsedTime()*this.legSpeed) * 0.3;
-            this.legRight2.rotation.x = Math.sin(this.clockLegs5.getElapsedTime()*this.legSpeed) * 0.3;
-            this.legRight3.rotation.x = Math.sin(this.clockLegs6.getElapsedTime()*this.legSpeed) * 0.3;
-        }
+        // if(this.clockLegs1.getElapsedTime() > 1){
+        //     this.legRight1.rotation.x = Math.sin(this.clockLegs4.getElapsedTime()*this.legSpeed) * 0.3;
+        //     // this.legRight2.rotation.x = Math.sin(this.clockLegs5.getElapsedTime()*this.legSpeed) * 0.3;
+        //     // this.legRight3.rotation.x = Math.sin(this.clockLegs6.getElapsedTime()*this.legSpeed) * 0.3;
+        // }
+        // if(this.clockLegs4.getElapsedTime() > 1){
+        //     this.legLeft2.rotation.x = Math.sin(this.clockLegs4.getElapsedTime()*this.legSpeed) * 0.3;
+        // }
+
+        // if(this.clockLegs5.getElapsedTime() > 1){
+        //     this.legLeft3.rotation.x = Math.sin(this.clockLegs5.getElapsedTime()*this.legSpeed) * 0.3;
+        // }
+
         // rotate but faster
 
     }
