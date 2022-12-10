@@ -12,7 +12,10 @@ class Ant {
 
         this.direction = new THREE.Vector3(Math.random() * 2 - 1, 0, Math.random() * 2 - 1).normalize();
 
-        
+        this.clockAntena1 = new THREE.Clock();
+        this.clockAntena2 = new THREE.Clock();
+        this.antenaSpeed = 2;
+
         this.clockLegs1 = new THREE.Clock();
         this.clockLegs2 = new THREE.Clock();
         this.clockLegs3 = new THREE.Clock();
@@ -280,6 +283,7 @@ class Ant {
             this.moveRandom();
             this.detectSugarCollision(antMaze);
             this.animateLegs();
+            this.animateAntena();
         }
     }
 
@@ -301,32 +305,15 @@ class Ant {
             this.legRight3.rotation.x = Math.sin(this.clockLegs3.getElapsedTime()*this.legSpeed) * 0.3;
         }
         
-       
+
+    }
+
+    animateAntena(){
+        this.antena1.rotation.x = Math.sin(this.clockAntena1.getElapsedTime()*this.antenaSpeed) * 0.1;
+        if(this.clockAntena1.getElapsedTime() > 5){
+            this.antena2.rotation.x = Math.sin(this.clockAntena2.getElapsedTime()*this.antenaSpeed) * 0.1;
+        }
         
-        // if(this.clockLegs4.getElapsedTime() > 2){
-        //     this.legRight2.rotation.x = Math.sin(this.clockLegs5.getElapsedTime()*this.legSpeed) * 0.3;
-        // } 
- 
-        // if(this.clockLegs5.getElapsedTime() > 2){
-        //     this.legRight3.rotation.x = Math.sin(this.clockLegs6.getElapsedTime()*this.legSpeed) * 0.3;
-        // }
-
-        // wait for 1 second and then rotate other legs
-        // if(this.clockLegs1.getElapsedTime() > 1){
-        //     this.legRight1.rotation.x = Math.sin(this.clockLegs4.getElapsedTime()*this.legSpeed) * 0.3;
-        //     // this.legRight2.rotation.x = Math.sin(this.clockLegs5.getElapsedTime()*this.legSpeed) * 0.3;
-        //     // this.legRight3.rotation.x = Math.sin(this.clockLegs6.getElapsedTime()*this.legSpeed) * 0.3;
-        // }
-        // if(this.clockLegs4.getElapsedTime() > 1){
-        //     this.legLeft2.rotation.x = Math.sin(this.clockLegs4.getElapsedTime()*this.legSpeed) * 0.3;
-        // }
-
-        // if(this.clockLegs5.getElapsedTime() > 1){
-        //     this.legLeft3.rotation.x = Math.sin(this.clockLegs5.getElapsedTime()*this.legSpeed) * 0.3;
-        // }
-
-        // rotate but faster
-
     }
 
     moveRandom(){
