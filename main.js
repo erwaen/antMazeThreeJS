@@ -6,7 +6,7 @@ import {MapControls, OrbitControls} from 'three/examples/jsm/controls/OrbitContr
 import Ant from './models/ant.js';
 import AntMaze from './models/antMaze.js';
 
-let isAntCameraOn = false;
+let isAntCameraOn = true;
 
 const antMaze = new AntMaze();
 const ant = new Ant();

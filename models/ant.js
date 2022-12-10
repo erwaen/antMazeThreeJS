@@ -4,7 +4,7 @@ import ThirdPersonCamera from './thirdPersonCamera';
 // ant model
 class Ant {
     constructor() {
-        this.speed = 20;
+        this.speed = 5;
         this.direction;
         this.clock = new THREE.Clock();
         this.delta;
@@ -13,7 +13,17 @@ class Ant {
         this.direction = new THREE.Vector3(Math.random() * 2 - 1, 0, Math.random() * 2 - 1).normalize();
 
         
-        
+        this.clockLegs1 = new THREE.Clock();
+        this.clockLegs2 = new THREE.Clock();
+        this.clockLegs3 = new THREE.Clock();
+        this.clockLegs4 = new THREE.Clock();
+        this.clockLegs5 = new THREE.Clock();
+        this.clockLegs6 = new THREE.Clock();
+
+    
+        this.legSpeed = 10;
+
+    
 
         this.antSystem = new THREE.Object3D();
         this.antSystem.position.y = 1.5;
@@ -267,12 +277,28 @@ class Ant {
         if (antMaze.numOfSugar > 0){
             this.moveRandom();
             this.detectSugarCollision(antMaze);
+            this.animateLegs();
         }
     }
 
+    animateLegs(){
+        // rotate with speed
+        this.legLeft1.rotation.x = Math.sin(this.clockLegs1.getElapsedTime()*this.legSpeed) * 0.3;
+        
+        this.legLeft2.rotation.x = Math.sin(this.clockLegs2.getElapsedTime()*this.legSpeed) * 0.3;
+        this.legLeft3.rotation.x = Math.sin(this.clockLegs3.getElapsedTime()*this.legSpeed) * 0.3;
+
+        // wait for 1 second and then rotate other legs
+        if(this.clockLegs1.getElapsedTime() > 1){
+            this.legRight1.rotation.x = Math.sin(this.clockLegs4.getElapsedTime()*this.legSpeed) * 0.3;
+            this.legRight2.rotation.x = Math.sin(this.clockLegs5.getElapsedTime()*this.legSpeed) * 0.3;
+            this.legRight3.rotation.x = Math.sin(this.clockLegs6.getElapsedTime()*this.legSpeed) * 0.3;
+        }
+        // rotate but faster
+
+    }
+
     moveRandom(){
-        
-        
         this.delta = this.clock.getDelta();      
         this.shift.copy(this.direction).multiplyScalar(this.delta*this.speed);
        
@@ -305,9 +331,6 @@ class Ant {
             }
 
         }
-
-
-        
     }
 }
 
