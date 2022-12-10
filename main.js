@@ -20,7 +20,8 @@ document.addEventListener("keydown", onDocumentKeyDown, false);
 function onDocumentKeyDown(event) {
     var keyCode = event.which;
     if (keyCode == 86) {
-        isAntCameraOn = !isAntCameraOn;
+        isAntCameraOn = !isAntCameraOn; // toggle cameras
+        ant._resetCamera();
     }
     
         // < keyboard

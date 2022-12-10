@@ -67,6 +67,10 @@ class Ant {
         return this._camera.camera;
     }
 
+    set camera(value) {
+        this._camera.camera = value;
+    }
+
    
     _initCamera() {
         this._camera =  new ThirdPersonCamera();
@@ -83,6 +87,20 @@ class Ant {
         this._camera.camera.lookAt(this.FlashLightBox.position);
         this._cameraControl = new OrbitControls(this.camera, this.renderer.domElement); // BORRAR
 
+    }
+
+    _resetCamera(){
+        console.log("reset camera");
+      
+        this._cameraControl.reset();
+        this._cameraControl.update();
+   
+        this._camera.camera.position.y = 10;
+        this._camera.camera.position.z = -15;
+        this._camera.camera.lookAt(this.FlashLightBox.position);
+
+        
+        
     }
     
     createMidPart() {
@@ -294,9 +312,7 @@ class Ant {
     }
 
     animateLegs(){
-        // rotate with speed
-        // console.log("clock 1 ", this.legLeft1.rotation.x);
-        // console.log("clock 2 ", this.legLeft2.rotation.x);
+        
         const seconds = this.clockLegs1.getElapsedTime();
         this.legLeft1.rotation.x = Math.sin(seconds*this.legSpeed) * 0.3;
   
@@ -355,6 +371,7 @@ class Ant {
             
         }
     }
+    
 
 
     moveRandom(){
@@ -380,7 +397,7 @@ class Ant {
             this.secondBB = new THREE.Box3().setFromObject(antMaze.sugarsMesh[i].mesh);
             if (this.firstBB.intersectsBox(this.secondBB)) {
                 antMaze.removeSugar(antMaze.sugarsMesh[i]);
-                console.log('hit');
+                console.log('hit! ', 'Quedan ', antMaze.numOfSugar, ' sugars' );
                 this.antLightLeft.intensity += 0.05;
                 this.antLightRight.intensity += 0.05;
             }

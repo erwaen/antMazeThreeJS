@@ -39,7 +39,7 @@ class AntMaze{
 
     get sugarsMesh(){
         let x = this._sugars.map(sugar => sugar);
-        // console.log(x);
+       
         return x;
     }
 
@@ -49,7 +49,7 @@ class AntMaze{
         this._sugars = this._sugars.filter(s => s !== sugar);
         
         this.numOfSugar--;
-        console.log(this.numOfSugar);
+    
         
     }
 
