@@ -4,11 +4,12 @@ import ThirdPersonCamera from './thirdPersonCamera';
 // ant model
 class Ant {
     constructor() {
-        this.speed = 5;
+        this.speed = 10;
         this.direction;
         this.clock = new THREE.Clock();
         this.delta;
         this.shift = new THREE.Vector3();
+
         this.direction = new THREE.Vector3(Math.random() * 2 - 1, 0, Math.random() * 2 - 1).normalize();
 
         
@@ -270,13 +271,21 @@ class Ant {
 
     moveRandom(){
         
-        
+        if(this.antSystem.position.x >= 100 || this.antSystem.position.x <= -100 || this.antSystem.position.z >= 100 || this.antSystem.position.z <= -100){
+            this.direction = new THREE.Vector3(Math.random() * 2 - 1, 0, Math.random() * 2 - 1).normalize();
+            // this.antSystem.rotateOnWorldAxis(this.direction);
+        }
+
+   
         this.delta = this.clock.getDelta();
         // console.log(this.delta)
         
         this.shift.copy(this.direction).multiplyScalar(this.delta*this.speed);
+        console.log(this.shift);
         this.antSystem.position.add(this.shift);
-        this.antSystem.lookAt(this.shift);
+        this.antSystem.lookAt(this.antSystem.position.x - this.direction.x, this.antSystem.position.y - this.direction.y, this.antSystem.position.z - this.direction.z);
+        
+        
         
 
     }
