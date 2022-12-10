@@ -300,21 +300,21 @@ class Ant {
 
     animateLegs(){
         // rotate with speed
-        this.legLeft1.rotation.x = Math.sin(this.clockLegs1.getElapsedTime()*this.legSpeed) * 0.3;
-        //this.legLeft1.rotation.z = Math.sin(this.clockLegs1.getElapsedTime()*this.legSpeedZ) * 0.01;
-        //this.legRight1.rotation.x = Math.sin(this.clockLegs1.getElapsedTime()*this.legSpeed) * 0.3;
-        this.legRight1.rotation.x = Math.sin(this.clockLegs4.getElapsedTime()*this.legSpeed) * 0.3;
-        if(this.clockLegs1.getElapsedTime() > 1 ){ 
-            this.legLeft2.rotation.x = Math.sin(this.clockLegs2.getElapsedTime()*this.legSpeed) * 0.3;
-            //this.legLeft2.rotation.z = Math.sin(this.clockLegs2.getElvapsedTime()*this.legSpeedZ) * 0.2;
-            this.legRight2.rotation.x = Math.sin(this.clockLegs2.getElapsedTime()*this.legSpeed) * 0.3;
-        } 
+        // console.log("clock 1 ", this.legLeft1.rotation.x);
+        // console.log("clock 2 ", this.legLeft2.rotation.x);
+        const seconds = this.clockLegs1.getElapsedTime();
+        this.legLeft1.rotation.x = Math.sin(seconds*this.legSpeed) * 0.3;
+  
+        this.legRight1.rotation.x = Math.sin(seconds*this.legSpeed) * 0.3;
+        // if(this.clockLegs1.getElapsedTime() > 0.5 ){ 
+        this.legLeft2.rotation.x = Math.sin(seconds*this.legSpeed + 90) * 0.3;
+        this.legRight2.rotation.x = Math.sin(seconds*this.legSpeed + 90) * 0.3;
+        
  
-        if(this.clockLegs1.getElapsedTime() > 2){
-            this.legLeft3.rotation.x = Math.sin(this.clockLegs3.getElapsedTime()*this.legSpeed) * 0.3;
-            //this.legLeft3.rotation.z = Math.sin(this.clockLegs3.getElapsedTime()*this.legSpeedZ) * 0.1;
-            this.legRight3.rotation.x = Math.sin(this.clockLegs3.getElapsedTime()*this.legSpeed) * 0.3;
-        }
+        // if(this.clockLegs2.getElapsedTime() > 2){
+        this.legLeft3.rotation.x = Math.sin(seconds*this.legSpeed + 45) * 0.3;
+        this.legRight3.rotation.x = Math.sin(seconds*this.legSpeed +45) * 0.3;
+        // }
         
 
     }
