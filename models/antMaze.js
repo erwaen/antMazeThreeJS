@@ -27,14 +27,34 @@ class AntMaze{
         this.scene.add(this.plane);
 
         this.numOfSugar = 20;
-        this.sugars = [];
+        this._sugars = [];
         for(let i = 0; i < this.numOfSugar; i++){
-            this.sugars.push(this.createRandomSugar());
-            this.scene.add(this.sugars[i].mesh);
+            this._sugars.push(this.createRandomSugar());
+            this.scene.add(this._sugars[i].mesh);
         }
 
         
+
+        
     }
+
+    get sugarsMesh(){
+        let x = this._sugars.map(sugar => sugar);
+        // console.log(x);
+        return x;
+    }
+
+    removeSugar(sugar){
+        this.scene.remove(sugar.mesh);
+        // remove sugar from _sugars
+        this._sugars = this._sugars.filter(s => s !== sugar);
+        
+        this.numOfSugar--;
+        console.log(this.numOfSugar);
+        
+    }
+
+  
 
     createTorus(){
         const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
@@ -55,6 +75,8 @@ class AntMaze{
         const sugar = new Sugar();
         return sugar;
     }
+
+    
 
     
 }

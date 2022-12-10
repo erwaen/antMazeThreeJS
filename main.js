@@ -6,18 +6,48 @@ import {MapControls, OrbitControls} from 'three/examples/jsm/controls/OrbitContr
 import Ant from './models/ant.js';
 import AntMaze from './models/antMaze.js';
 
+let isAntCameraOn = false;
 
 const antMaze = new AntMaze();
 const ant = new Ant();
 antMaze.scene.add(ant.antSystem);
 
+// helpers
+
+// v keycode 
+
+document.addEventListener("keydown", onDocumentKeyDown, false);
+function onDocumentKeyDown(event) {
+    var keyCode = event.which;
+    if (keyCode == 86) {
+        isAntCameraOn = !isAntCameraOn;
+    }
+    
+        // < keyboard
+    // } else if (keyCode == 83) {
+    //     cube.position.y -= ySpeed;
+    // } else if (keyCode == 65) {
+    //     cube.position.x -= xSpeed;
+    // } else if (keyCode == 68) {
+    //     cube.position.x += xSpeed;
+    // } else if (keyCode == 32) {
+    //     cube.position.set(0, 0, 0);
+};
 
 function animate(){
   requestAnimationFrame(animate);
   antMaze.controls.update();
-  antMaze.renderer.render(antMaze.scene, ant.camera);
-  ant.Update(antMaze)
+  if (isAntCameraOn){
+    antMaze.renderer.render(antMaze.scene, ant.camera);
+  }else{
+    antMaze.renderer.render(antMaze.scene, antMaze.camera);
+  }
+  
+  ant.Update(antMaze);
+
+
 
 }
+
 
 animate();

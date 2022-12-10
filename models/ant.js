@@ -4,7 +4,7 @@ import ThirdPersonCamera from './thirdPersonCamera';
 // ant model
 class Ant {
     constructor() {
-        this.speed = 10;
+        this.speed = 20;
         this.direction;
         this.clock = new THREE.Clock();
         this.delta;
@@ -13,7 +13,7 @@ class Ant {
         this.direction = new THREE.Vector3(Math.random() * 2 - 1, 0, Math.random() * 2 - 1).normalize();
 
         
-
+        
 
         this.antSystem = new THREE.Object3D();
         this.antSystem.position.y = 1.5;
@@ -266,28 +266,48 @@ class Ant {
     Update(antMaze){
         if (antMaze.numOfSugar > 0){
             this.moveRandom();
+            this.detectSugarCollision(antMaze);
         }
     }
 
     moveRandom(){
         
-        if(this.antSystem.position.x >= 100 || this.antSystem.position.x <= -100 || this.antSystem.position.z >= 100 || this.antSystem.position.z <= -100){
-            this.direction = new THREE.Vector3(Math.random() * 2 - 1, 0, Math.random() * 2 - 1).normalize();
-            // this.antSystem.rotateOnWorldAxis(this.direction);
-        }
-
-   
-        this.delta = this.clock.getDelta();
-        // console.log(this.delta)
         
+        this.delta = this.clock.getDelta();      
         this.shift.copy(this.direction).multiplyScalar(this.delta*this.speed);
-        console.log(this.shift);
+       
+
+        const currentPosition = this.antSystem.position;
+        let newPosition = new THREE.Vector3(currentPosition.x + this.shift.x, currentPosition.y + this.shift.y, currentPosition.z + this.shift.z); 
+
+        if(newPosition.x > 100 || newPosition.x < -100 || newPosition.z > 100 || newPosition.z < -100){
+            this.direction = new THREE.Vector3(Math.random() * 2 - 1, 0, Math.random() * 2 - 1).normalize();
+            this.shift.copy(this.direction).multiplyScalar(this.delta*this.speed);
+            newPosition = new THREE.Vector3(newPosition.x + this.shift.x, newPosition.y + this.shift.y, newPosition.z + this.shift.z); 
+            
+        }
+  
         this.antSystem.position.add(this.shift);
         this.antSystem.lookAt(this.antSystem.position.x - this.direction.x, this.antSystem.position.y - this.direction.y, this.antSystem.position.z - this.direction.z);
-        
-        
-        
+    
+    }
 
+    detectSugarCollision(antMaze){
+        this.firstBB = new THREE.Box3().setFromObject(this.antSystem);
+        // loop through all the sugar meshes in javascript
+        for (let i = 0; i < antMaze.sugarsMesh.length; i++) {
+            this.secondBB = new THREE.Box3().setFromObject(antMaze.sugarsMesh[i].mesh);
+            if (this.firstBB.intersectsBox(this.secondBB)) {
+                antMaze.removeSugar(antMaze.sugarsMesh[i]);
+                console.log('hit');
+                this.antLightLeft.intensity += 0.05;
+                this.antLightRight.intensity += 0.05;
+            }
+
+        }
+
+
+        
     }
 }
 
