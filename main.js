@@ -6,6 +6,7 @@ import {MapControls, OrbitControls} from 'three/examples/jsm/controls/OrbitContr
 import Ant from './models/ant.js';
 import AntMaze from './models/antMaze.js';
 
+
 const antMaze = new AntMaze();
 const ant = new Ant();
 antMaze.scene.add(ant.antSystem);
@@ -15,7 +16,8 @@ function animate(){
   requestAnimationFrame(animate);
   antMaze.controls.update();
   antMaze.renderer.render(antMaze.scene, ant.camera);
-  // ant.antSystem.position.x += 0.03;
+  ant.Update(antMaze)
+
 }
 
 animate();
