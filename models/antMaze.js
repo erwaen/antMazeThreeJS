@@ -20,8 +20,7 @@ class AntMaze{
         this.gridHelper = new THREE.GridHelper(200, 200);
         // this.scene.add(this.gridHelper, this.ambientLight);
         
-        this.torus = this.createTorus();
-        this.scene.add(this.torus);
+        
 
         this.plane = this.createFloor();
         this.scene.add(this.plane);
@@ -56,12 +55,7 @@ class AntMaze{
 
   
 
-    createTorus(){
-        const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
-        const material = new THREE.MeshStandardMaterial({color: 0xFF6347});
-        const torus = new THREE.Mesh(geometry, material);
-        return torus;
-    }
+    
     createFloor(){
         this.mesaTexture = new THREE.TextureLoader().load('./assets/table2.jpeg');
         let geometry = new THREE.PlaneGeometry( 200, 200 );

@@ -5,12 +5,16 @@ import {MapControls, OrbitControls} from 'three/examples/jsm/controls/OrbitContr
 // ant model
 class Ant {
     constructor() {
-        this.speed = 5;
+        this.speed = 7;
         this.direction;
         this.clock = new THREE.Clock();
         this.delta;
         this.shift = new THREE.Vector3();
 
+        this.randomSecond = Math.round(Math.random() * 5 + 5);
+
+        // Primera = direccion de movimiento, consiguiendo un valor de -1 a 1 y normalizando el vector
+        // para tener vector unitario
         this.direction = new THREE.Vector3(Math.random() * 2 - 1, 0, Math.random() * 2 - 1).normalize();
 
         this.clockAntena1 = new THREE.Clock();
@@ -76,18 +80,9 @@ class Ant {
         this._camera.camera.position.z = -15;
         
         
-        // this._cameraControl.target = this.antSystem.position;
-        
-
-        // this.camera.camera.rot
-        // this._camera.camera.rotateY(Math.PI);
-        // this._camera.camera.rotateX(-Math.PI / 4);
         this._camera.camera.lookAt(this.FlashLightBox.position);
         this._cameraControl = new OrbitControls(this.camera, this.renderer.domElement); // BORRAR
 
-
-
-        
     }
     
     createMidPart() {
@@ -327,24 +322,55 @@ class Ant {
         
     }
 
-    moveRandom(){
-        this.delta = this.clock.getDelta();      
-        this.shift.copy(this.direction).multiplyScalar(this.delta*this.speed);
-       
+    _changeDirectionEveryKSecond(){
+        if(this.clock.getElapsedTime() > this.randomSecond){
+            
+            this.clock.start(); // reinicia el clock de movimiento
 
+
+            // generar un angulo para rotar entre -90 y 90 grados
+            const angle = Math.random() * Math.PI/2 - Math.PI/4;
+            
+            // crear una matriz de rotacion
+            const rotationMatrix = new THREE.Matrix4().makeRotationY(angle);
+            // aplicar la rotacion al vector direccion
+            this.direction = this.direction.applyMatrix4(rotationMatrix).normalize();
+
+            // calcular en cuanto tiempo va a ser el siguiente cambio
+            this.randomSecond = Math.round(Math.random() * 5 + 3);
+           
+
+        }
+    }
+
+    _detectWallAndChangeDirection(){
         const currentPosition = this.antSystem.position;
-        let newPosition = new THREE.Vector3(currentPosition.x + this.shift.x, currentPosition.y + this.shift.y, currentPosition.z + this.shift.z); 
-
+        let newPosition = new THREE.Vector3(currentPosition.x + this.shift.x, currentPosition.y + this.shift.y, currentPosition.z + this.shift.z);
         if(newPosition.x > 100 || newPosition.x < -100 || newPosition.z > 100 || newPosition.z < -100){
-            this.direction = new THREE.Vector3(Math.random() * 2 - 1, 0, Math.random() * 2 - 1).normalize();
+            // get inverse direction
+            this.direction = new THREE.Vector3(-this.direction.x, -this.direction.y, -this.direction.z);
+            // this.direction = new THREE.Vector3(Math.random() * 2 - 1, 0, Math.random() * 2 - 1).normalize();
             this.shift.copy(this.direction).multiplyScalar(this.delta*this.speed);
             newPosition = new THREE.Vector3(newPosition.x + this.shift.x, newPosition.y + this.shift.y, newPosition.z + this.shift.z); 
             
         }
+    }
+
+
+    moveRandom(){
+        // change direction every 10 seconds
+        
+        this.delta = this.clock.getDelta();  
+          
+        this.shift.copy(this.direction).multiplyScalar(this.delta*this.speed);
+        
+        this._detectWallAndChangeDirection();
   
+        // la position siguiente del antSystem seria la que se calculo
         this.antSystem.position.add(this.shift);
+        // Que el antsystem mire hacia donde se mueve
         this.antSystem.lookAt(this.antSystem.position.x - this.direction.x, this.antSystem.position.y - this.direction.y, this.antSystem.position.z - this.direction.z);
-    
+        this._changeDirectionEveryKSecond();
     }
 
     detectSugarCollision(antMaze){
