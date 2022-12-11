@@ -10,3 +10,12 @@ canvas {
   left: 0;
   color: white;
 }
+
+kbd {  
+  border: 1px solid white;    
+  border-radius: 8px;    
+  padding: 3px 5px;   
+  margin: 2px;  
+
+
+}
