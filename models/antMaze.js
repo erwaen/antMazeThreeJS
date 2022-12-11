@@ -49,6 +49,10 @@ class AntMaze{
         this._sugars = this._sugars.filter(s => s !== sugar);
         
         this.numOfSugar--;
+
+        // get html element via id
+        let numOfSugarHTML = document.getElementById("numOfSugarHTML");
+        numOfSugarHTML.innerHTML = 'Quedan ' + this.numOfSugar.toString() + ' azucares';
     
         
     }
