@@ -29,7 +29,7 @@ class AntMaze{
         this._sugars = [];
         for(let i = 0; i < this.numOfSugar; i++){
             this._sugars.push(this.createRandomSugar());
-            this.scene.add(this._sugars[i].mesh);
+            this.scene.add(this._sugars[i].sugarBox);
         }
 
         
@@ -44,7 +44,7 @@ class AntMaze{
     }
 
     removeSugar(sugar){
-        this.scene.remove(sugar.mesh);
+        this.scene.remove(sugar.sugarBox);
         // remove sugar from _sugars
         this._sugars = this._sugars.filter(s => s !== sugar);
         
